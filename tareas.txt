@@ -1,0 +1,15 @@
+proyecto en React, con Typescript, usando XML, Tailwind CSS, Redux, websocket.
+
+
+
+npx tailwind -i  tailwind.css -o styles.css --minify
+
+ver:
+rem
+em
+white-space
+word-wrap
+y el resto de esos
+
+todo de flex y de grid
+APRENDERLO!
