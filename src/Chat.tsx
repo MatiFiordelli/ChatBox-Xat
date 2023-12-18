@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react' 
+import { useEffect, useRef, useState } from 'react' 
 import SmileysCarousel from './Components/SmileysCarousel'
 import { SmileyReducerState, ChatboxReducerState } from './Types'
 import { useSelector } from 'react-redux'
