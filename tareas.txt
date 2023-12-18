@@ -1,11 +1,18 @@
-proyecto en React, con Typescript, usando XML, Tailwind CSS, Redux, websocket.
+proyecto en React, con Typescript, usando XML, Tailwind CSS, Redux, Context API, Websocket, unit tests.
 
 npx tailwind -i  tailwind.css -o styles.css --minify
 
+hacer un sistema de users con name y id, en base a eso, cargar los contactos en la lista
 
-rem
-em
 white-space
 word-wrap
 flex 
 grid
+
+https://armoniza-tu-alma-e-vitrine.vercel.app/
+https://e-commerce-comidasargentinasjb.vercel.app/breads
+https://responsiver-spa-movie-finder.vercel.app/
+https://costos.vercel.app/
+https://github.com/MatiFiordelli
+
+//hacer q cdo este ws close, el meensaje se envie local en vez de remoto, y ver como reconectar
