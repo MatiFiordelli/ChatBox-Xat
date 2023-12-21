@@ -45,7 +45,7 @@ const replaceMarksWithEachProperImgTag = (msg:string, smileyCodesArray:RegExpMat
     return msg
 }
 
-export const pushMessageToContainer = ({msg, msgContainerDivRef, messageInputRef, dispatch, ws}: PushMessageToContainer) => { 
+export const pushMessageToContainer = ({msg, msgContainerDivRef, messageInputRef, dispatch, ws, nickName}: PushMessageToContainer) => { 
     const msg1 = validateEachCharacter(msg)
     const smileyCodesArray = msg1.match(/\((.*?)\)/g)
     const msg2 = placeMarkInSmileysCodesPosition(msg1, smileyCodesArray)
@@ -61,7 +61,7 @@ export const pushMessageToContainer = ({msg, msgContainerDivRef, messageInputRef
 
             if(msg4!==''){			
                 const msgHTMLElement = `
-                                        <p style="font-weight:bold;">Matias</p>
+                                        <p style="font-weight:bold;">${nickName}</p>
                                         <div style="margin-bottom:0.7rem; display:inline-block;">${msg4}</div>
                                         `
 

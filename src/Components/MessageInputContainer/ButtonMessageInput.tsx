@@ -11,12 +11,14 @@ export default function ButtonMessageInput({ ws }:WebSocketConnection){
     const messageInputRef = useContext(MessageInputRefCtx)
     const msgContainerDivRef = useContext(MsgContainerDivRefCtx)
     const messageInput = useSelector<RootState>((state)=>state.chatboxReducer.messageInput) as string
+    const nickName = useSelector<RootState>((state)=>state.chatboxReducer.user.nickName) as string
     const pushMsgArgs = {
         msg:messageInput, 
         msgContainerDivRef, 
         messageInputRef, 
         dispatch,
-        ws
+        ws,
+        nickName
     }
 
     useEffect(()=>{

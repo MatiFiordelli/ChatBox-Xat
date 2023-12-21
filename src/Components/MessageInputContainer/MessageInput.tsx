@@ -7,12 +7,12 @@ import { MessageInputRefCtx, MsgContainerDivRefCtx } from "../../Context"
 import { pushMessageToContainer } from "../../Functions/pushMessageToContainer"
 import { WebSocketConnection } from '../../Types'
 
-
 export default function MessageInput({ ws }: WebSocketConnection){
     const messageInputRef = useContext(MessageInputRefCtx)
     const msgContainerDivRef = useContext(MsgContainerDivRefCtx)
     const dispatch = useDispatch()
     const messageInput = useSelector<RootState>((state)=>state.chatboxReducer.messageInput) as string
+    const nickName = useSelector<RootState>((state)=>state.chatboxReducer.user.nickName) as string
     
     const onKeyDownEnterKey = (e:React.KeyboardEvent<HTMLInputElement>) => {
 		e.key==='Enter' && 
@@ -21,7 +21,8 @@ export default function MessageInput({ ws }: WebSocketConnection){
                 msgContainerDivRef, 
                 messageInputRef, 
                 dispatch,
-                ws
+                ws,
+                nickName
             })
 	}
     

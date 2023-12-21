@@ -13,15 +13,21 @@ export interface PropsButtonToggleVisitorsContainerMobile {
 
 export interface ReduxAction {
     type: string
-	payload: SmileyReducerState | ChatboxReducerState
+	payload: SmileyReducerState | string
 }
 
 export interface SmileyReducerState {
     smileyClicked: SmileyObject
 }
 
+export interface User {
+	nickName: string
+	id: string
+}
+
 export interface ChatboxReducerState {
 	messageInput: string
+	user: User
 }
 
 export interface WebSocketConnection {
@@ -34,6 +40,12 @@ export interface PushMessageToContainer {
 	messageInputRef:React.MutableRefObject<HTMLDivElement|null>|null
 	dispatch: Dispatch<Action>
 	ws: WebSocket
+	nickName: string
+}
+
+export interface ShowLogin {
+	showLogin: boolean
+	setShowLogin: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 
