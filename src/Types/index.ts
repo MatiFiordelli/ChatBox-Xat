@@ -1,4 +1,4 @@
-import React from "react"
+import React, { SetStateAction, MutableRefObject } from "react"
 import { Action, Dispatch } from "redux"
 
 export interface SmileyObject {
@@ -8,7 +8,7 @@ export interface SmileyObject {
 
 export interface PropsButtonToggleVisitorsContainerMobile {
 	visitorsMobileOpened: boolean
-	setVisitorsMobileOpened: React.Dispatch<React.SetStateAction<boolean>>
+	setVisitorsMobileOpened: React.Dispatch<SetStateAction<boolean>>
 }
 
 export interface ReduxAction {
@@ -30,14 +30,21 @@ export interface ChatboxReducerState {
 	user: User
 }
 
-export interface WebSocketConnection {
-    ws: WebSocket
+export interface PropsMessageInput {
+    ws:WebSocket
+    beepSound: HTMLAudioElement | null
+}
+
+export interface PropsButtonInOut {
+	toggleWsBoolean: boolean
+	setToggleWsBoolean: React.Dispatch<SetStateAction<boolean>>
+	dingdongSound: HTMLAudioElement | null
 }
 
 export interface PushMessageToContainer {
 	msg:string 
-	msgContainerDivRef:React.MutableRefObject<HTMLDivElement|null>|null 
-	messageInputRef:React.MutableRefObject<HTMLDivElement|null>|null
+	msgContainerDivRef:MutableRefObject<HTMLDivElement|null>|null 
+	messageInputRef:MutableRefObject<HTMLDivElement|null>|null
 	dispatch: Dispatch<Action>
 	ws: WebSocket
 	nickName: string
@@ -45,7 +52,7 @@ export interface PushMessageToContainer {
 
 export interface ShowLogin {
 	showLogin: boolean
-	setShowLogin: React.Dispatch<React.SetStateAction<boolean>>
+	setShowLogin: React.Dispatch<SetStateAction<boolean>>
 }
 
 

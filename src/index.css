@@ -7,6 +7,6 @@
 }
 
 html{
-	overflow: hidden;
-	
+	outline: 1px solid rgb(15 23 42);
+	overflow: hidden;	
 }

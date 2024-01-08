@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { RootState } from './Redux/store'
 import { setMessageInput, setUserName } from './Redux/actions'
-import MessagesContainer from './Components/MessagesContainer'
+import MessagesListContainer from './Components/MessagesListContainer'
 import VisitorsContainer from './Components/VisitorsContainer'
 import AsideVisitorsContainerMobile from './Components/VisitorsContainer/VisitorsContainerMobile/AsideVisitorsContainerMobile'
 import MessageInputContainer from './Components/MessageInputContainer'
@@ -33,10 +33,17 @@ export default function ChatBox() {
 		if(user){
 			const parsedUser = JSON.parse(user)
 			dispatch(setUserName( JSON.stringify(parsedUser) ))
+
+			fetch('http://localhost:3001/insertUser',{
+				method: 'POST',
+				headers: { 
+					'Content-Type': 'application/json' 
+				},
+				body: user
+			})
 		}
+
 	},[])
-
-
 	
 	return (
 		<ToggleModalLoginVisibility.Provider value={{showLogin, setShowLogin}}>
@@ -49,7 +56,7 @@ export default function ChatBox() {
 
 						<section className="absolute text-gray-100 rounded-xl w-[90dvw] h-screen flex flex-row justify-center lg:gap-[0.5vw] m-auto p-2">
 							<div className="h-[98%] w-full sm:w-3/4 sm:h-[90dvh] flex flex-col justify-between text-slate-900 my-auto">
-								<MessagesContainer />
+								<MessagesListContainer />
 								<SmileysCarousel />
 								<MessageInputContainer />
 							</div>

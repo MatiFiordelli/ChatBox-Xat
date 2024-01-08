@@ -1,9 +1,9 @@
 import { useContext, useState } from "react"
-import { ToggleModalLoginVisibility } from "../Context"
-import { ShowLogin } from "../Types"
-import capitalizeText from "../Functions/capitalizeText"
-import { setUserName } from "../Redux/actions"
-import { userLocalStorage } from "../Functions/userLocalStorage"
+import { ToggleModalLoginVisibility } from "../../Context"
+import { ShowLogin } from "../../Types"
+import capitalizeText from "../../Functions/capitalizeText"
+import { setUserName } from "../../Redux/actions"
+import { userLocalStorage } from "../../Functions/userLocalStorage"
 import { useDispatch } from "react-redux"
 
 export default function ModalLogin(){

@@ -5,25 +5,32 @@ import { setMessageInput } from "../../Redux/actions"
 import { useContext } from "react"
 import { MessageInputRefCtx, MsgContainerDivRefCtx } from "../../Context"
 import { pushMessageToContainer } from "../../Functions/pushMessageToContainer"
-import { WebSocketConnection } from '../../Types'
+import { PropsMessageInput } from '../../Types'
 
-export default function MessageInput({ ws }: WebSocketConnection){
+export default function MessageInput({ ws, beepSound }: PropsMessageInput ){
     const messageInputRef = useContext(MessageInputRefCtx)
     const msgContainerDivRef = useContext(MsgContainerDivRefCtx)
     const dispatch = useDispatch()
     const messageInput = useSelector<RootState>((state)=>state.chatboxReducer.messageInput) as string
     const nickName = useSelector<RootState>((state)=>state.chatboxReducer.user.nickName) as string
+    const pushMsgArgs = {
+        msg:messageInput, 
+        msgContainerDivRef, 
+        messageInputRef, 
+        dispatch,
+        ws,
+        nickName
+    }
     
-    const onKeyDownEnterKey = (e:React.KeyboardEvent<HTMLInputElement>) => {
-		e.key==='Enter' && 
-            pushMessageToContainer({
-                msg:messageInput, 
-                msgContainerDivRef, 
-                messageInputRef, 
-                dispatch,
-                ws,
-                nickName
-            })
+    const onKeyDownEnterKey = async(e:React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key==='Enter' && messageInputRef?.current?.value){ 
+            if (ws.readyState === 1) {
+                beepSound?.play()
+                pushMessageToContainer(pushMsgArgs)
+            } else {
+                alert('Para enviar un mensaje, debes entrar al Chat')
+            }
+        }
 	}
     
     return(

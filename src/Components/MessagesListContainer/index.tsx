@@ -1,7 +1,7 @@
-import { MsgContainerDivRefCtx } from '../Context'
+import { MsgContainerDivRefCtx } from '../../Context'
 import { useContext } from 'react'
 
-export default function MessagesContainer(){
+export default function MessagesListContainer(){
     const msgContainerDivRef = useContext(MsgContainerDivRefCtx)
 
     return(

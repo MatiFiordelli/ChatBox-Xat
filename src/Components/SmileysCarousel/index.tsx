@@ -4,10 +4,10 @@ import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/mousewheel"
 import { Navigation, Mousewheel } from "swiper/modules"
-import { getSmileysMap } from "../Functions/getSmileyMap"
+import { getSmileysMap } from "../../Functions/getSmileyMap"
 import { useDispatch } from "react-redux"
-import { addSmiley } from "../Redux/actions"
-import { MessageInputRefCtx } from "../Context"
+import { addSmiley } from "../../Redux/actions"
+import { MessageInputRefCtx } from "../../Context"
 
 export default function SmileysCarousel() {
 	const messageInputRef = useContext(MessageInputRefCtx)
