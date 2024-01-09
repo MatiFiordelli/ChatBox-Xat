@@ -3,8 +3,8 @@ import ButtonMessageInput from "./ButtonMessageInput"
 import MessageInput from "./MessageInput"
 import { useSelector } from "react-redux"
 import { RootState } from "../../Redux/store"
-import DingDong from '../../Assets/Sounds/dingdong.webm'
-import Beep from '../../Assets/Sounds/beep.webm'
+import DingDong from '../../../public/Assets/Sounds/dingdong.webm'
+import Beep from '../../../public/Assets/Sounds/beep.webm'
 import wsUrl from "../../Services/webSocket"
 import ButtonInOut from "./ButtonInOut"
 
