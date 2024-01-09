@@ -21,7 +21,7 @@ export default function Visitors(){
                     <img
                         className="block aspect-auto w-min h-min xl:h-[80%]"
                         alt={nickName}
-                        src="public/assets/smileys/a_(user)_20.webp"
+                        src="public/a_(user)_20.webp"
                     />
                     <p>{nickName}</p>
                 </div>
@@ -33,7 +33,7 @@ export default function Visitors(){
                     <img
                         className="block aspect-auto w-min h-min xl:h-[80%]"
                         alt="Antonela1"
-                        src="public/assets/smileys/a_(user)_20.webp"                     
+                        src="public/a_(user)_20.webp"                     
                     />
                     <p>Antonela1</p>
                 </div>
@@ -43,7 +43,7 @@ export default function Visitors(){
                     <img
                         className="block aspect-auto w-min h-min xl:h-[80%]"
                         alt="Antonela2"
-                        src="public/assets/smileys/a_(user)_20.webp"                     
+                        src="public/a_(user)_20.webp"                     
                     />
                     <p>Antonela2</p>
                 </div>
