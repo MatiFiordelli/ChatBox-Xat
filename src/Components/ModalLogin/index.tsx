@@ -42,6 +42,7 @@ export default function ModalLogin(){
                 createUserInDB(userObj)
             }           
 
+            !showCloseButton && setShowCloseButton(true)
 			setShowLogin(false)
 			dispatch(setUserName(`${userLocalStorage()}`))	
 
