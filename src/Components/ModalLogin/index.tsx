@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { ToggleModalLoginVisibility } from "../../Context"
 import { ShowLogin } from "../../Types"
 import capitalizeText from "../../Functions/capitalizeText"
@@ -12,6 +12,7 @@ export default function ModalLogin(){
     const dispatch = useDispatch()
     const [nickName, setNickName] = useState('')
     const {showLogin, setShowLogin} = useContext(ToggleModalLoginVisibility) as ShowLogin
+    const [showCloseButton, setShowCloseButton] = useState(false)
 
     const checkId = (user: string | null) => {
         let id = null
@@ -42,15 +43,24 @@ export default function ModalLogin(){
             }           
 
 			setShowLogin(false)
-			dispatch(setUserName(`${userLocalStorage()}`))			
+			dispatch(setUserName(`${userLocalStorage()}`))	
+
 		}
 	}
+
+    useEffect(()=>{
+        const user = userLocalStorage()
+        user
+            ? setShowCloseButton(true)
+            : setShowCloseButton(false)
+
+    },[])
 
     return(
         <div className="bg-slate-900 dark:bg-slate-300 w-fit lg:w-1/3 flex flex-col 2xl:gap-[2vw] justify-center items-center p-4 2xl:p-[2vw] 2xl:pt-2 rounded-lg">
             <div className="flex justify-end items-center border-1 w-full m-0 p-0">
                 <span 
-                    className="block text-slate-900 w-fit cursor-pointer"
+                    className={`${showCloseButton ? 'block' : 'hidden'} text-slate-900 w-fit cursor-pointer`}
                     onClick={()=>setShowLogin(!showLogin)}
                 >
                     ⨉
