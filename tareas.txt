@@ -15,4 +15,5 @@ https://responsiver-spa-movie-finder.vercel.app/
 https://costos.vercel.app/
 https://github.com/MatiFiordelli
 
-//hacer q cdo este ws close, el meensaje se envie local en vez de remoto, y ver como reconectar
+//si al entrar por primera vez no se crea un usuario, no debe permitir entrar al chat, por ejemplo si entro y cierro el cuadro de login.
+//al renombrar el usuario, debe renombrarlo en la base de datos en vez de crear otro usuario

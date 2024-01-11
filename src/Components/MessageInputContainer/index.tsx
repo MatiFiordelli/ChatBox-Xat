@@ -27,6 +27,7 @@ export default function MessageInputContainer(){
     ws.onerror = () => {
         alert('No fue posible conectarse al servidor')
     }
+    
     ws.onclose = () => {
         console.log('Se cerró la conexion')
         fetch('http://localhost:3001/deleteUser', {

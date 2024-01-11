@@ -5,18 +5,41 @@ import capitalizeText from "../../Functions/capitalizeText"
 import { setUserName } from "../../Redux/actions"
 import { userLocalStorage } from "../../Functions/userLocalStorage"
 import { useDispatch } from "react-redux"
+import createUserInDB from "../../Services/createUserInDB"
+import renameUserInDB from "../../Services/renameUserInDB"
 
 export default function ModalLogin(){
     const dispatch = useDispatch()
     const [nickName, setNickName] = useState('')
     const {showLogin, setShowLogin} = useContext(ToggleModalLoginVisibility) as ShowLogin
 
-    const setNickNameFunction = (nickName:string) => {
-		if(nickName!==''){
-			const id = Math.random().toString().split('.')[1]
-			const nickNameCapitalized = capitalizeText(nickName)
-			const userObj = {nickName: nickNameCapitalized, id: id}
+    const checkId = (user: string | null) => {
+        let id = null
+
+        if(user){
+            const userObj = JSON.parse(user)
+            id = userObj.id
+        } else {
+            id = Math.random().toString().split('.')[1] 
+        }
+
+        return id
+    }
+
+    const setNickNameFunction = (nickName: string) => {
+        if(nickName!==''){
+            const user = userLocalStorage()
+            const nickNameCapitalized = capitalizeText(nickName)
+			const id = checkId(user)
+            
+            const userObj = {nickName: nickNameCapitalized, id: id}
 			localStorage.setItem('user', `${JSON.stringify(userObj)}`)
+
+            if(user){ 
+                renameUserInDB(userObj)
+            } else { 
+                createUserInDB(userObj)
+            }           
 
 			setShowLogin(false)
 			dispatch(setUserName(`${userLocalStorage()}`))			
@@ -33,7 +56,7 @@ export default function ModalLogin(){
                     ⨉
                 </span>
             </div>
-            <label className="text-base xl:text-xl 2xl:text-[1.6vw] text-slate-300 dark:text-slate-900 bolder text-bold mb-4">
+            <label className="text-base xl:text-xl 2xl:text-[1.6vw] text-slate-300 dark:text-slate-900 bolder text-bold mb-4" htmlFor="nickName">
                 Cual es tu nombre?
             </label>
             <input 

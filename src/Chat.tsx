@@ -30,17 +30,10 @@ export default function ChatBox() {
 	
 	useEffect(()=>{		
 		const user = userLocalStorage()
+
 		if(user){
 			const parsedUser = JSON.parse(user)
 			dispatch(setUserName( JSON.stringify(parsedUser) ))
-
-			fetch('http://localhost:3001/insertUser',{
-				method: 'POST',
-				headers: { 
-					'Content-Type': 'application/json' 
-				},
-				body: user
-			})
 		}
 
 	},[])
