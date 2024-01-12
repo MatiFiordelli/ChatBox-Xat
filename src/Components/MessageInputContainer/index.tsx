@@ -7,9 +7,11 @@ import DingDong from '../../../public/Assets/Sounds/dingdong.webm'
 import Beep from '../../../public/Assets/Sounds/beep.webm'
 import wsUrl from "../../Services/webSocket"
 import ButtonInOut from "./ButtonInOut"
+import deleteUserInDB from "../../Services/deleteUserInDB"
+import { userLocalStorage } from "../../Functions/userLocalStorage"
 
 export default function MessageInputContainer(){
-    const user = useSelector<RootState>((state)=>state.chatboxReducer.user) as string
+    //const user = useSelector<RootState>((state)=>state.chatboxReducer.user) as string
     const [ws, setWs] = useState(new WebSocket(wsUrl))
     const [toggleWsBoolean, setToggleWsBoolean] = useState(true)
 
@@ -27,16 +29,12 @@ export default function MessageInputContainer(){
     ws.onerror = () => {
         alert('No fue posible conectarse al servidor')
     }
-    
+
     ws.onclose = () => {
         console.log('Se cerró la conexion')
-        fetch('http://localhost:3001/deleteUser', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        })
+        
+        const user = userLocalStorage()
+        user && deleteUserInDB(JSON.parse(user))
     }
 
     return(

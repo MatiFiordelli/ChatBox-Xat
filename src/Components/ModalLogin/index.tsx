@@ -1,12 +1,11 @@
 import { useContext, useEffect, useState } from "react"
 import { ToggleModalLoginVisibility } from "../../Context"
-import { ShowLogin } from "../../Types"
-import capitalizeText from "../../Functions/capitalizeText"
+import { ShowLogin, User } from "../../Types"
 import { setUserName } from "../../Redux/actions"
 import { userLocalStorage } from "../../Functions/userLocalStorage"
 import { useDispatch } from "react-redux"
-import createUserInDB from "../../Services/createUserInDB"
-import renameUserInDB from "../../Services/renameUserInDB"
+import getUserOBJFromLocalStorage from "../../Functions/getUserOBJFromLocalStorage"
+import createOrRenameUserInDB from "../../Functions/createOrRenameUserInDB"
 
 export default function ModalLogin(){
     const dispatch = useDispatch()
@@ -14,38 +13,20 @@ export default function ModalLogin(){
     const {showLogin, setShowLogin} = useContext(ToggleModalLoginVisibility) as ShowLogin
     const [showCloseButton, setShowCloseButton] = useState(false)
 
-    const checkId = (user: string | null) => {
-        let id = null
-
-        if(user){
-            const userObj = JSON.parse(user)
-            id = userObj.id
-        } else {
-            id = Math.random().toString().split('.')[1] 
-        }
-
-        return id
+    const setUserInLocalStorage = (userObj: User) => {
+        localStorage.setItem('user', `${JSON.stringify(userObj)}`)
     }
 
     const setNickNameFunction = (nickName: string) => {
         if(nickName!==''){
             const user = userLocalStorage()
-            const nickNameCapitalized = capitalizeText(nickName)
-			const id = checkId(user)
-            
-            const userObj = {nickName: nickNameCapitalized, id: id}
-			localStorage.setItem('user', `${JSON.stringify(userObj)}`)
-
-            if(user){ 
-                renameUserInDB(userObj)
-            } else { 
-                createUserInDB(userObj)
-            }           
+            const userObj = getUserOBJFromLocalStorage(user, nickName)
+            setUserInLocalStorage(userObj)
+            createOrRenameUserInDB(user, userObj, false)
 
             !showCloseButton && setShowCloseButton(true)
 			setShowLogin(false)
-			dispatch(setUserName(`${userLocalStorage()}`))	
-
+			dispatch(setUserName(`${userLocalStorage()}`))
 		}
 	}
 

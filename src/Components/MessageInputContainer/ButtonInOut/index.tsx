@@ -1,9 +1,14 @@
+import createOrRenameUserInDB from "../../../Functions/createOrRenameUserInDB"
+import { userLocalStorage } from "../../../Functions/userLocalStorage"
 import { PropsButtonInOut } from "../../../Types"
 
 export default function ButtonInOut({ toggleWsBoolean, setToggleWsBoolean, dingdongSound }: PropsButtonInOut ) {
     const onClickEnterChatButton = () => {
         setToggleWsBoolean(!toggleWsBoolean)
         !toggleWsBoolean && dingdongSound?.play()
+
+        const user = userLocalStorage()
+        !toggleWsBoolean && user && createOrRenameUserInDB(user, JSON.parse(user), true)
     }
 
     return(

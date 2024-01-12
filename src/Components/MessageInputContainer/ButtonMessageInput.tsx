@@ -21,11 +21,11 @@ export default function ButtonMessageInput({ ws, beepSound }: PropsMessageInput)
         nickName
     }
 
-    useEffect(()=>{
+    /* useEffect(()=>{
         ws.onopen = (() => {
             pushMessageToContainer(pushMsgArgs)
         })
-    },[])
+    },[]) */
 
     const onClickSendButton = () => {
         if (messageInputRef?.current?.value){

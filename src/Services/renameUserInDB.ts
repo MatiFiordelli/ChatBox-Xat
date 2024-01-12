@@ -8,4 +8,5 @@ export default function renameUserInDB(user: User){
         },
         body: JSON.stringify(user)
     })
+    .catch((e)=>console.log(e))
 }
