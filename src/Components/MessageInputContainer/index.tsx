@@ -1,8 +1,6 @@
 import { useState, useEffect, useContext } from "react"
 import ButtonMessageInput from "./ButtonMessageInput"
 import MessageInput from "./MessageInput"
-import { useSelector } from "react-redux"
-import { RootState } from "../../Redux/store"
 import DingDong from '../../../public/Assets/Sounds/dingdong.webm'
 import Beep from '../../../public/Assets/Sounds/beep.webm'
 import wsUrl from "../../Services/webSocket"
@@ -13,7 +11,6 @@ import { ToggleWsBooleanCtx } from "../../Context"
 import { ToggleWsBoolean } from "../../Types"
 
 export default function MessageInputContainer(){
-    //const user = useSelector<RootState>((state)=>state.chatboxReducer.user) as string
     const [ws, setWs] = useState(new WebSocket(wsUrl))
     const {toggleWsBoolean, setToggleWsBoolean} = useContext(ToggleWsBooleanCtx) as ToggleWsBoolean
 

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux"
 import { RootState } from "../../Redux/store"
 import { pushMessageToContainer } from "../../Functions/pushMessageToContainer"
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import { MessageInputRefCtx, MsgContainerDivRefCtx } from "../../Context"
 import { useDispatch } from "react-redux"
 import { PropsMessageInput } from '../../Types'

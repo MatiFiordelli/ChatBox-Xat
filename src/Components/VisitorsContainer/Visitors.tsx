@@ -6,7 +6,7 @@ import { ShowLogin, ToggleWsBoolean } from "../../Types"
 
 
 export default function Visitors(){
-    const {toggleWsBoolean, setToggleWsBoolean} = useContext(ToggleWsBooleanCtx) as ToggleWsBoolean
+    const {toggleWsBoolean} = useContext(ToggleWsBooleanCtx) as ToggleWsBoolean
     const {showLogin, setShowLogin} = useContext(ToggleModalLoginVisibilityCtx) as ShowLogin
     const nickName = useSelector<RootState>((state)=>state.chatboxReducer.user.nickName) as string
 
