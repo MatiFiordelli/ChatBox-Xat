@@ -9,7 +9,11 @@ import MessagesListContainer from './Components/MessagesListContainer'
 import VisitorsContainer from './Components/VisitorsContainer'
 import AsideVisitorsContainerMobile from './Components/VisitorsContainer/VisitorsContainerMobile/AsideVisitorsContainerMobile'
 import MessageInputContainer from './Components/MessageInputContainer'
-import { MessageInputRefCtx, MsgContainerDivRefCtx, ToggleModalLoginVisibility } from './Context'
+import { 
+		MessageInputRefCtx, 
+		MsgContainerDivRefCtx, 
+		ToggleModalLoginVisibilityCtx, 
+		ToggleWsBooleanCtx } from './Context'
 import ModalLogin from './Components/ModalLogin'
 import { userLocalStorage } from './Functions/userLocalStorage'
 
@@ -22,6 +26,8 @@ export default function ChatBox() {
 	
 	const messageInputRef = useRef<HTMLInputElement | null>(null)
 	const msgContainerDivRef = useRef<HTMLInputElement | null>(null)
+
+	const [toggleWsBoolean, setToggleWsBoolean] = useState(true)
 
 	useEffect(()=>{
 		stateSmileys.smileyClicked.code!=='' 
@@ -39,27 +45,29 @@ export default function ChatBox() {
 	},[])
 	
 	return (
-		<ToggleModalLoginVisibility.Provider value={{showLogin, setShowLogin}}>
-			<MsgContainerDivRefCtx.Provider value={msgContainerDivRef}>
-				<MessageInputRefCtx.Provider value={messageInputRef}>
-					<main className="relative grid grid-cols-2 place-items-center text-center w-[100dvw] h-[100dvh] overflow-hidden bg-slate-300 dark:bg-slate-900 duration-1000 transition-colors text-base lg:text-[1.8vw] xl:leading-loose">
-						<section className={`${showLogin ? 'absolute' : 'hidden'} bg-black bg-opacity-70 text-white w-[100dvw] h-[100dvh] z-30 flex justify-center items-center`}>
-							<ModalLogin />
-						</section>
+		<ToggleWsBooleanCtx.Provider value={{toggleWsBoolean, setToggleWsBoolean}}>
+			<ToggleModalLoginVisibilityCtx.Provider value={{showLogin, setShowLogin}}>
+				<MsgContainerDivRefCtx.Provider value={msgContainerDivRef}>
+					<MessageInputRefCtx.Provider value={messageInputRef}>
+						<main className="relative grid grid-cols-2 place-items-center text-center w-[100dvw] h-[100dvh] overflow-hidden bg-slate-300 dark:bg-slate-900 duration-1000 transition-colors text-base lg:text-[1.8vw] xl:leading-loose">
+							<section className={`${showLogin ? 'absolute' : 'hidden'} bg-black bg-opacity-70 text-white w-[100dvw] h-[100dvh] z-30 flex justify-center items-center`}>
+								<ModalLogin />
+							</section>
 
-						<section className="absolute text-gray-100 rounded-xl w-[90dvw] h-screen flex flex-row justify-center lg:gap-[0.5vw] m-auto p-2">
-							<div className="h-[98%] w-full sm:w-3/4 sm:h-[90dvh] flex flex-col justify-between text-slate-900 my-auto">
-								<MessagesListContainer />
-								<SmileysCarousel />
-								<MessageInputContainer />
-							</div>
-							
-							<VisitorsContainer />
-							<AsideVisitorsContainerMobile />
-						</section>
-					</main>
-				</MessageInputRefCtx.Provider>
-			</MsgContainerDivRefCtx.Provider>
-		</ToggleModalLoginVisibility.Provider>
+							<section className="absolute text-gray-100 rounded-xl w-[90dvw] h-screen flex flex-row justify-center lg:gap-[0.5vw] m-auto p-2">
+								<div className="h-[98%] w-full sm:w-3/4 sm:h-[90dvh] flex flex-col justify-between text-slate-900 my-auto">
+									<MessagesListContainer />
+									<SmileysCarousel />
+									<MessageInputContainer />
+								</div>
+								
+								<VisitorsContainer />
+								<AsideVisitorsContainerMobile />
+							</section>
+						</main>
+					</MessageInputRefCtx.Provider>
+				</MsgContainerDivRefCtx.Provider>
+			</ToggleModalLoginVisibilityCtx.Provider>
+		</ToggleWsBooleanCtx.Provider>
 	)
 }

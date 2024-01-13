@@ -1,8 +1,12 @@
+import { useContext } from "react"
 import createOrRenameUserInDB from "../../../Functions/createOrRenameUserInDB"
 import { userLocalStorage } from "../../../Functions/userLocalStorage"
-import { PropsButtonInOut } from "../../../Types"
+import { PropsButtonInOut, ToggleWsBoolean } from "../../../Types"
+import { ToggleWsBooleanCtx } from "../../../Context"
 
-export default function ButtonInOut({ toggleWsBoolean, setToggleWsBoolean, dingdongSound }: PropsButtonInOut ) {
+export default function ButtonInOut({ dingdongSound }: PropsButtonInOut ) {
+    const {toggleWsBoolean, setToggleWsBoolean} = useContext(ToggleWsBooleanCtx) as ToggleWsBoolean
+
     const onClickEnterChatButton = () => {
         setToggleWsBoolean(!toggleWsBoolean)
         !toggleWsBoolean && dingdongSound?.play()

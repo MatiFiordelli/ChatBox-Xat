@@ -36,8 +36,6 @@ export interface PropsMessageInput {
 }
 
 export interface PropsButtonInOut {
-	toggleWsBoolean: boolean
-	setToggleWsBoolean: React.Dispatch<SetStateAction<boolean>>
 	dingdongSound: HTMLAudioElement | null
 }
 
@@ -53,6 +51,11 @@ export interface PushMessageToContainer {
 export interface ShowLogin {
 	showLogin: boolean
 	setShowLogin: React.Dispatch<SetStateAction<boolean>>
+}
+
+export interface ToggleWsBoolean {
+	toggleWsBoolean:boolean
+	setToggleWsBoolean: React.Dispatch<SetStateAction<boolean>>
 }
 
 

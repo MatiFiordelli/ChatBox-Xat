@@ -1,13 +1,22 @@
 import { useSelector } from "react-redux"
 import { RootState } from "../../Redux/store"
-import { ToggleModalLoginVisibility } from "../../Context"
+import { ToggleModalLoginVisibilityCtx, ToggleWsBooleanCtx } from "../../Context"
 import { useContext } from "react"
-import { ShowLogin } from "../../Types"
+import { ShowLogin, ToggleWsBoolean } from "../../Types"
 
 
 export default function Visitors(){
-    const {showLogin, setShowLogin} = useContext(ToggleModalLoginVisibility) as ShowLogin
+    const {toggleWsBoolean, setToggleWsBoolean} = useContext(ToggleWsBooleanCtx) as ToggleWsBoolean
+    const {showLogin, setShowLogin} = useContext(ToggleModalLoginVisibilityCtx) as ShowLogin
     const nickName = useSelector<RootState>((state)=>state.chatboxReducer.user.nickName) as string
+
+    const onClickUserNickname = () => {
+        if(toggleWsBoolean){
+            setShowLogin(!showLogin)
+        } else {
+            alert('Para cambiar tu Nickname, primero debes entrar al chat')
+        }
+    }
 
     return(
         <>
@@ -15,7 +24,7 @@ export default function Visitors(){
             <>
                 <div 
                     className="flex items-center truncate cursor-pointer" 
-                    onClick={()=>setShowLogin(!showLogin)}
+                    onClick={()=>onClickUserNickname()}
                     title="Click para modificar"
                 >
                     <img

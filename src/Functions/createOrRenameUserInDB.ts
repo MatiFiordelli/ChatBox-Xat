@@ -8,7 +8,6 @@ export default function createOrRenameUserInDB(user: string | null, userObj: Use
             ? renameUserInDB(userObj)
             : createUserInDB(userObj)
     } else {
-        console.log(user)
         user && createUserInDB(userObj)
     }
 }
