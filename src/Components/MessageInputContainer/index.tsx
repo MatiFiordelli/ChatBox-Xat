@@ -7,12 +7,13 @@ import wsUrl from "../../Services/webSocket"
 import ButtonInOut from "./ButtonInOut"
 import deleteUserInDB from "../../Services/deleteUserInDB"
 import { userLocalStorage } from "../../Functions/userLocalStorage"
-import { ToggleWsBooleanCtx } from "../../Context"
-import { ToggleWsBoolean } from "../../Types"
+import { ToggleWsBooleanCtx, UsersListCtx } from "../../Context"
+import { ToggleWsBoolean, UsersList } from "../../Types"
 
 export default function MessageInputContainer(){
     const [ws, setWs] = useState(new WebSocket(wsUrl))
     const {toggleWsBoolean, setToggleWsBoolean} = useContext(ToggleWsBooleanCtx) as ToggleWsBoolean
+    const {usersList, setUsersList} = useContext(UsersListCtx) as UsersList
 
     useEffect(()=>{
         toggleWsBoolean
@@ -23,7 +24,26 @@ export default function MessageInputContainer(){
 
     ws.onopen = () => {
         console.log('Conectado al Websocket')
+        //ws.send('{"command": "GETUSERSLIST"}')
     }
+
+    /* ws.onmessage = async (e) => {
+        const parsedData = JSON.parse(e.data).command
+        if (parsedData==='GETUSERSLIST'){
+            try{
+                const req = await fetch('http://localhost:3001/getUsersList')
+                const data = await req.json()
+                setUsersList(data)
+
+            } catch(e){
+                console.log('Error al solicitar la Lista de Usuarios a la API', e)
+            }
+        }
+    } */
+    
+    /* useEffect(()=>{
+        console.log(usersList)
+    },[usersList])  */
 
     ws.onerror = () => {
         setToggleWsBoolean(false)

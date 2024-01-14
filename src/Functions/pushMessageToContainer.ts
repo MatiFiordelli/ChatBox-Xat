@@ -53,15 +53,16 @@ export const pushMessageToContainer = ({msg, msgContainerDivRef, messageInputRef
     let msg4 = null
 
     try { 
-        const msg = JSON.stringify({msg: msg3})
+        const msg = JSON.stringify({msg: msg3, nickName: nickName})
         ws.send(msg)  
 
         ws.onmessage = (e) => {
             msg4 = JSON.parse(e.data).msg
-
+            const parsedNickname = JSON.parse(e.data).nickName
+            
             if(msg4!==''){			
                 const msgHTMLElement = `
-                                        <p style="font-weight:bold;">${nickName}</p>
+                                        <p style="font-weight:bold;">${parsedNickname}</p>
                                         <div style="margin-bottom:0.7rem; display:inline-block;">${msg4}</div>
                                         `
 
