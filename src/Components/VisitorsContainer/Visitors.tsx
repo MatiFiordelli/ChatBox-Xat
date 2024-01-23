@@ -10,7 +10,7 @@ export default function Visitors(){
     const {showLogin, setShowLogin} = useContext(ToggleModalLoginVisibilityCtx) as ShowLogin
     const nickName = useSelector<RootState>((state)=>state.chatboxReducer.user.nickName) as string
     const id = useSelector<RootState>((state)=>state.chatboxReducer.user.id) as string
-    const {usersList, setUsersList} = useContext(UsersListCtx) as UsersList
+    const {usersList, } = useContext(UsersListCtx) as UsersList
 
     const onClickUserNickname = () => {
         if(toggleWsBoolean){

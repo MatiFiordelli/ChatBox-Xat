@@ -18,6 +18,10 @@ export default function MessageInputContainer(){
     const ws = useContext(WsCtx) as React.MutableRefObject<WebSocket | null>
     const [wsId,] = useState((Math.floor(Math.random() * 1000)).toString())
 
+    useEffect(()=>{
+        
+    },[usersList])
+
     const insertContact = async () => {
         if(ws.current?.readyState===1){
             try{ 
