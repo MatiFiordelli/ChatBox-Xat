@@ -31,7 +31,7 @@ export interface ChatboxReducerState {
 }
 
 export interface PropsMessageInput {
-    ws: WebSocket
+    ws: WebSocket | null
     beepSound: HTMLAudioElement | null
 }
 
@@ -41,10 +41,10 @@ export interface PropsButtonInOut {
 
 export interface PushMessageToContainer {
 	msg: string 
-	msgContainerDivRef: MutableRefObject<HTMLDivElement|null>|null 
-	messageInputRef: MutableRefObject<HTMLDivElement|null>|null
+	msgContainerDivRef: MutableRefObject<HTMLDivElement|null> | null 
+	messageInputRef: MutableRefObject<HTMLDivElement|null> | null
 	dispatch: Dispatch<Action>
-	ws: WebSocket
+	ws: WebSocket | null
 	nickName: string
 }
 
@@ -59,8 +59,18 @@ export interface ToggleWsBoolean {
 }
 
 export interface UsersList {
-	usersList: null
-	setUsersList: React.Dispatch<SetStateAction<null>>
+	usersList: User[] | null
+	setUsersList: setUsersListParams
 }
+
+export interface createWebsocketParams {
+    ws: WsRef
+    wsId: string
+}
+
+export type setUsersListParams = React.Dispatch<React.SetStateAction<User[] | null>>
+
+export type WsRef = React.MutableRefObject<WebSocket | null>
+
 
 

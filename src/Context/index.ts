@@ -6,3 +6,4 @@ export const MsgContainerDivRefCtx = createContext<React.MutableRefObject<HTMLDi
 export const ToggleModalLoginVisibilityCtx = createContext<ShowLogin | null>(null)
 export const ToggleWsBooleanCtx = createContext<ToggleWsBoolean | null>(null)
 export const UsersListCtx = createContext<UsersList | null>(null)
+export const WsCtx = createContext<React.MutableRefObject<WebSocket | null> | null>(null)

@@ -29,7 +29,7 @@ export default function ButtonMessageInput({ ws, beepSound }: PropsMessageInput)
 
     const onClickSendButton = () => {
         if (messageInputRef?.current?.value){
-            if (ws.readyState === 1) {
+            if (ws?.readyState === 1) {
                 beepSound?.play()
                 pushMessageToContainer(pushMsgArgs)
             } else {

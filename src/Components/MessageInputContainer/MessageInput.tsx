@@ -24,7 +24,7 @@ export default function MessageInput({ ws, beepSound }: PropsMessageInput ){
     
     const onKeyDownEnterKey = async(e:React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key==='Enter' && messageInputRef?.current?.value){ 
-            if (ws.readyState === 1) {
+            if (ws?.readyState === 1) {
                 beepSound?.play()
                 pushMessageToContainer(pushMsgArgs)
             } else {

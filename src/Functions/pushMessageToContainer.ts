@@ -53,27 +53,32 @@ export const pushMessageToContainer = ({msg, msgContainerDivRef, messageInputRef
     let msg4 = null
 
     try { 
-        const msg = JSON.stringify({msg: msg3, nickName: nickName})
-        ws.send(msg)  
+        console.log(msg3)
+        //correction: don't use nickName, instead use id. and don't send the HTML Element, instead, send fileName.
+        const msgObj = {msg: msg3, nickName: nickName}
+        const msgStringify = JSON.stringify(msgObj)
+        ws?.send(msgStringify)  
 
-        ws.onmessage = (e) => {
-            msg4 = JSON.parse(e.data).msg
-            const parsedNickname = JSON.parse(e.data).nickName
+        if(ws) {
+            ws.onmessage = (e) => {
+                msg4 = JSON.parse(e.data).msg
+                const parsedNickname = JSON.parse(e.data).nickName
+                
+                if(msg4!==''){			
+                    const msgHTMLElement = `
+                                            <p style="font-weight:bold;">${parsedNickname}</p>
+                                            <div style="margin-bottom:0.7rem; display:inline-block;">${msg4}</div>
+                                            `
+
+                    if(msgContainerDivRef?.current){
+                        msgContainerDivRef.current.innerHTML += msgHTMLElement
+                        msgContainerDivRef.current.scrollTop = msgContainerDivRef.current.scrollHeight
+                    }       
+                }
             
-            if(msg4!==''){			
-                const msgHTMLElement = `
-                                        <p style="font-weight:bold;">${parsedNickname}</p>
-                                        <div style="margin-bottom:0.7rem; display:inline-block;">${msg4}</div>
-                                        `
-
-                if(msgContainerDivRef?.current){
-                    msgContainerDivRef.current.innerHTML += msgHTMLElement
-                    msgContainerDivRef.current.scrollTop = msgContainerDivRef.current.scrollHeight
-                }       
+                dispatch(setMessageInput(''))
+                messageInputRef?.current?.focus()
             }
-        
-            dispatch(setMessageInput(''))
-            messageInputRef?.current?.focus()
         }
     } catch(e){
         alert('No fue posible conectarse al servidor')

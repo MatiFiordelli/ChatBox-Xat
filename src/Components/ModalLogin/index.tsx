@@ -1,5 +1,5 @@
 import React, { KeyboardEvent, useContext, useEffect, useRef, useState } from "react"
-import { ToggleModalLoginVisibilityCtx } from "../../Context"
+import { ToggleModalLoginVisibilityCtx, WsCtx } from "../../Context"
 import { ShowLogin, User } from "../../Types"
 import { setUserName } from "../../Redux/actions"
 import { userLocalStorage } from "../../Functions/userLocalStorage"
@@ -13,6 +13,7 @@ export default function ModalLogin(){
     const {showLogin, setShowLogin} = useContext(ToggleModalLoginVisibilityCtx) as ShowLogin
     const [showCloseButton, setShowCloseButton] = useState(false)
     const modalLoginInputNickname = useRef(null) as React.MutableRefObject<HTMLInputElement | null>
+    const ws = useContext(WsCtx) as React.MutableRefObject<WebSocket | null>
 
     const setUserInLocalStorage = (userObj: User) => {
         localStorage.setItem('user', `${JSON.stringify(userObj)}`)
@@ -23,7 +24,7 @@ export default function ModalLogin(){
             const user = userLocalStorage()
             const userObj = getUserOBJFromLocalStorage(user, nickName)
             setUserInLocalStorage(userObj)
-            createOrRenameUserInDB(user, userObj, false)
+            createOrRenameUserInDB(user, userObj, false, ws)
 
             !showCloseButton && setShowCloseButton(true)
 			setShowLogin(false)
