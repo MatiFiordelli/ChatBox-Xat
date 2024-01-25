@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react"
+import { useState, useEffect, useContext, EventHandler } from "react"
 import ButtonMessageInput from "./ButtonMessageInput"
 import MessageInput from "./MessageInput"
 import DingDong from '../../../public/Assets/Sounds/dingdong.webm'
@@ -6,21 +6,24 @@ import Beep from '../../../public/Assets/Sounds/beep.webm'
 import ButtonInOut from "./ButtonInOut"
 import deleteUserInDB from "../../Services/deleteUserInDB"
 import { userLocalStorage } from "../../Functions/userLocalStorage"
-import { ToggleWsBooleanCtx, UsersListCtx, WsCtx } from "../../Context"
+import { MessageInputRefCtx, MsgContainerDivRefCtx, ToggleWsBooleanCtx, UsersListCtx, WsCtx } from "../../Context"
 import { ToggleWsBoolean, UsersList } from "../../Types"
 import createUserInDB from "../../Services/createUserInDB"
 import { refreshUserList } from "../../Services/refreshUserList"
 import { createWebsocket } from "../../Services/createWebsocket"
+import { useDispatch } from "react-redux"
+import { setMessageInput } from "../../Redux/actions"
 
 export default function MessageInputContainer(){
+    const dispatch = useDispatch()
+    const msgContainerDivRef = useContext(MsgContainerDivRefCtx)
+    const messageInputRef = useContext(MessageInputRefCtx)
     const {toggleWsBoolean, setToggleWsBoolean} = useContext(ToggleWsBooleanCtx) as ToggleWsBoolean
     const {usersList, setUsersList} = useContext(UsersListCtx) as UsersList
     const ws = useContext(WsCtx) as React.MutableRefObject<WebSocket | null>
     const [wsId,] = useState((Math.floor(Math.random() * 1000)).toString())
 
-    useEffect(()=>{
-        
-    },[usersList])
+    if(usersList) true
 
     const insertContact = async () => {
         if(ws.current?.readyState===1){
@@ -75,13 +78,51 @@ export default function MessageInputContainer(){
                 insertContact()
                 refreshUserList(setUsersList)
             }
-            ws.current.onmessage = async() => {
-                console.log('Refrescando la lista de contactos')
-                refreshUserList(setUsersList)
+            ws.current.onmessage = async(e) => {
+                const msg4 = JSON.parse(e.data).msg
+                const parsedNickname = JSON.parse(e.data).nickName
+
+                if(msg4!=='' && msg4!==undefined){			
+                    const msgHTMLElement = `
+                                            <p style="font-weight:bold;">${parsedNickname}</p>
+                                            <div style="margin-bottom:0.7rem; display:inline-block;">${msg4}</div>
+                                            `
+
+                    if(msgContainerDivRef?.current){
+                        msgContainerDivRef.current.innerHTML += msgHTMLElement
+                        msgContainerDivRef.current.scrollTop = msgContainerDivRef.current.scrollHeight
+                    } 
+
+                    dispatch(setMessageInput(''))
+                    messageInputRef?.current?.focus()
+                    console.log('Mensaje enviado con exito')
+                } else {
+                    console.log('Refrescando la lista de contactos')
+                    refreshUserList(setUsersList)
+                }
             }
         }
 
     },[toggleWsBoolean])
+
+    useEffect(()=>{
+            const beforeUnload = (event: Event) => {
+                const e = event || window.event
+                e.preventDefault()
+                deleteUserInDB(JSON.parse(userLocalStorage() as string))
+                ws.current?.send('{"command": "REFRESH_USERS"}')
+                setToggleWsBoolean(false)
+            }
+
+            window.addEventListener('beforeunload', (e) => beforeUnload(e))
+
+            return ()=>{
+                deleteUserInDB(JSON.parse(userLocalStorage() as string))
+                ws.current?.send('{"command": "REFRESH_USERS"}')
+                setToggleWsBoolean(false)
+                removeEventListener('beforeunload', (e) => beforeUnload(e))
+            }
+    },[])
 
     return(        
         <div id="messageInputContainer" className="w-full h-[15%] flex flex-row space-x-2 lg:gap-[0.5vw]">

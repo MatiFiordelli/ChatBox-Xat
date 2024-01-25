@@ -4,7 +4,6 @@ import { ToggleModalLoginVisibilityCtx, ToggleWsBooleanCtx, UsersListCtx } from 
 import { useContext } from "react"
 import { ShowLogin, ToggleWsBoolean, UsersList } from "../../Types"
 
-
 export default function Visitors(){
     const {toggleWsBoolean} = useContext(ToggleWsBooleanCtx) as ToggleWsBoolean
     const {showLogin, setShowLogin} = useContext(ToggleModalLoginVisibilityCtx) as ShowLogin
@@ -53,27 +52,6 @@ export default function Visitors(){
                             </div>
                     ))
                 }
-
-                {/* <div 
-                    className="flex items-center truncate cursor-pointer" 
-                >
-                    <img
-                        className="block aspect-auto w-min h-min xl:h-[80%]"
-                        alt="Antonela1"
-                        src="a_(user)_20.webp"                     
-                    />
-                    <p>Antonela1</p>
-                </div>
-                <div 
-                    className="flex items-center truncate cursor-pointer" 
-                >
-                    <img
-                        className="block aspect-auto w-min h-min xl:h-[80%]"
-                        alt="Antonela2"
-                        src="a_(user)_20.webp"                     
-                    />
-                    <p>Antonela2</p>
-                </div> */}
             </>       
             }
         </>

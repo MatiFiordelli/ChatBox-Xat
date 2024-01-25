@@ -3,21 +3,17 @@ import { RootState } from "../../Redux/store"
 import { useDispatch } from "react-redux"
 import { setMessageInput } from "../../Redux/actions"
 import { useContext } from "react"
-import { MessageInputRefCtx, MsgContainerDivRefCtx } from "../../Context"
-import { pushMessageToContainer } from "../../Functions/pushMessageToContainer"
+import { MessageInputRefCtx } from "../../Context"
+import { processMessageAndSendToWs } from "../../Functions/processMessageAndSendToWs"
 import { PropsMessageInput } from '../../Types'
 
 export default function MessageInput({ ws, beepSound }: PropsMessageInput ){
     const messageInputRef = useContext(MessageInputRefCtx)
-    const msgContainerDivRef = useContext(MsgContainerDivRefCtx)
     const dispatch = useDispatch()
     const messageInput = useSelector<RootState>((state)=>state.chatboxReducer.messageInput) as string
     const nickName = useSelector<RootState>((state)=>state.chatboxReducer.user.nickName) as string
     const pushMsgArgs = {
         msg:messageInput, 
-        msgContainerDivRef, 
-        messageInputRef, 
-        dispatch,
         ws,
         nickName
     }
@@ -26,7 +22,7 @@ export default function MessageInput({ ws, beepSound }: PropsMessageInput ){
 		if (e.key==='Enter' && messageInputRef?.current?.value){ 
             if (ws?.readyState === 1) {
                 beepSound?.play()
-                pushMessageToContainer(pushMsgArgs)
+                processMessageAndSendToWs(pushMsgArgs)
             } else {
                 alert('Para enviar un mensaje, debes entrar al Chat')
             }

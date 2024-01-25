@@ -1,4 +1,4 @@
-import React, { SetStateAction, MutableRefObject } from "react"
+import React, { SetStateAction } from "react"
 import { Action, Dispatch } from "redux"
 
 export interface SmileyObject {
@@ -41,9 +41,6 @@ export interface PropsButtonInOut {
 
 export interface PushMessageToContainer {
 	msg: string 
-	msgContainerDivRef: MutableRefObject<HTMLDivElement|null> | null 
-	messageInputRef: MutableRefObject<HTMLDivElement|null> | null
-	dispatch: Dispatch<Action>
 	ws: WebSocket | null
 	nickName: string
 }

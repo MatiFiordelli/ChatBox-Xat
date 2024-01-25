@@ -1,37 +1,27 @@
 import { useSelector } from "react-redux"
 import { RootState } from "../../Redux/store"
-import { pushMessageToContainer } from "../../Functions/pushMessageToContainer"
+import { processMessageAndSendToWs } from "../../Functions/processMessageAndSendToWs"
 import { useContext } from "react"
-import { MessageInputRefCtx, MsgContainerDivRefCtx } from "../../Context"
+import { MessageInputRefCtx } from "../../Context"
 import { useDispatch } from "react-redux"
 import { PropsMessageInput } from '../../Types'
 
 export default function ButtonMessageInput({ ws, beepSound }: PropsMessageInput){
     const dispatch = useDispatch()
     const messageInputRef = useContext(MessageInputRefCtx)
-    const msgContainerDivRef = useContext(MsgContainerDivRefCtx)
     const messageInput = useSelector<RootState>((state)=>state.chatboxReducer.messageInput) as string
     const nickName = useSelector<RootState>((state)=>state.chatboxReducer.user.nickName) as string
     const pushMsgArgs = {
         msg:messageInput, 
-        msgContainerDivRef, 
-        messageInputRef, 
-        dispatch,
         ws,
         nickName
     }
-
-    /* useEffect(()=>{
-        ws.onopen = (() => {
-            pushMessageToContainer(pushMsgArgs)
-        })
-    },[]) */
 
     const onClickSendButton = () => {
         if (messageInputRef?.current?.value){
             if (ws?.readyState === 1) {
                 beepSound?.play()
-                pushMessageToContainer(pushMsgArgs)
+                processMessageAndSendToWs(pushMsgArgs)
             } else {
                 alert('Para enviar un mensaje, debes entrar al Chat')
             }

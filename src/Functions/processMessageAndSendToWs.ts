@@ -1,5 +1,4 @@
 import { getSmileysMap } from "./getSmileyMap"
-import { setMessageInput } from "../Redux/actions"
 import { PushMessageToContainer } from "../Types"
 
 const validateEachCharacter = (msg:string) => {
@@ -45,41 +44,18 @@ const replaceMarksWithEachProperImgTag = (msg:string, smileyCodesArray:RegExpMat
     return msg
 }
 
-export const pushMessageToContainer = ({msg, msgContainerDivRef, messageInputRef, dispatch, ws, nickName}: PushMessageToContainer) => { 
+export const processMessageAndSendToWs = ({msg, ws, nickName}: PushMessageToContainer) => { 
     const msg1 = validateEachCharacter(msg)
     const smileyCodesArray = msg1.match(/\((.*?)\)/g)
     const msg2 = placeMarkInSmileysCodesPosition(msg1, smileyCodesArray)
     const msg3 = replaceMarksWithEachProperImgTag(msg2, smileyCodesArray)
-    let msg4 = null
 
     try { 
-        console.log(msg3)
-        //correction: don't use nickName, instead use id. and don't send the HTML Element, instead, send fileName.
+        //correction: don't to use nickName, instead use id. and don't send the HTML Element, instead, send fileName.
         const msgObj = {msg: msg3, nickName: nickName}
         const msgStringify = JSON.stringify(msgObj)
         ws?.send(msgStringify)  
 
-        if(ws) {
-            ws.onmessage = (e) => {
-                msg4 = JSON.parse(e.data).msg
-                const parsedNickname = JSON.parse(e.data).nickName
-                
-                if(msg4!==''){			
-                    const msgHTMLElement = `
-                                            <p style="font-weight:bold;">${parsedNickname}</p>
-                                            <div style="margin-bottom:0.7rem; display:inline-block;">${msg4}</div>
-                                            `
-
-                    if(msgContainerDivRef?.current){
-                        msgContainerDivRef.current.innerHTML += msgHTMLElement
-                        msgContainerDivRef.current.scrollTop = msgContainerDivRef.current.scrollHeight
-                    }       
-                }
-            
-                dispatch(setMessageInput(''))
-                messageInputRef?.current?.focus()
-            }
-        }
     } catch(e){
         alert('No fue posible conectarse al servidor')
     }
