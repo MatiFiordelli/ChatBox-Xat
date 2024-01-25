@@ -1,5 +1,4 @@
 import React, { SetStateAction } from "react"
-import { Action, Dispatch } from "redux"
 
 export interface SmileyObject {
 	src: string | undefined

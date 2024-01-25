@@ -3,11 +3,9 @@ import { RootState } from "../../Redux/store"
 import { processMessageAndSendToWs } from "../../Functions/processMessageAndSendToWs"
 import { useContext } from "react"
 import { MessageInputRefCtx } from "../../Context"
-import { useDispatch } from "react-redux"
 import { PropsMessageInput } from '../../Types'
 
 export default function ButtonMessageInput({ ws, beepSound }: PropsMessageInput){
-    const dispatch = useDispatch()
     const messageInputRef = useContext(MessageInputRefCtx)
     const messageInput = useSelector<RootState>((state)=>state.chatboxReducer.messageInput) as string
     const nickName = useSelector<RootState>((state)=>state.chatboxReducer.user.nickName) as string
