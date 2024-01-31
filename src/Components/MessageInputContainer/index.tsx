@@ -99,8 +99,13 @@ export default function MessageInputContainer(){
                     messageInputRef?.current?.focus()
                     console.log('Mensaje enviado con exito')
                 } else {
-                    console.log('Refrescando la lista de contactos')
-                    refreshUserList(setUsersList)
+                    const dataXML = new DOMParser().parseFromString(e.data, 'text/xml')
+                    const command = dataXML.querySelector('command')?.textContent
+
+                    if(command==='REFRESH_USERS') {
+                        refreshUserList(setUsersList)
+                        console.log('Refrescando la lista de contactos')
+                    }
                 }
             }
         }
