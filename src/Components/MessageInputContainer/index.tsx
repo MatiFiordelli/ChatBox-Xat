@@ -31,7 +31,8 @@ export default function MessageInputContainer(){
                 const ins = await createUserInDB(JSON.parse(userLocalStorage() as string))
                 if (ins) {
                     console.log('Usuario insertado en la base de datos, exitosamente')
-                    ws.current?.send('{"command": "REFRESH_USERS"}')
+                    //ws.current?.send('{"command": REFRESH_USERS"}')
+                    ws.current?.send('<xml><command>REFRESH_USERS</command></xml>')
                 }
 
             } catch(e){
@@ -46,7 +47,7 @@ export default function MessageInputContainer(){
             if (del) {
                 console.log('Usuario borrado de la base de datos, exitosamente')
                 if (ws.current?.readyState===1){
-                    ws.current?.send('{"command": "REFRESH_USERS"}')
+                    ws.current?.send('<xml><command>REFRESH_USERS</command></xml>')
                     ws.current?.close()
                     ws.current = null
                 }
@@ -79,10 +80,11 @@ export default function MessageInputContainer(){
                 refreshUserList(setUsersList)
             }
             ws.current.onmessage = async(e) => {
-                const msg4 = JSON.parse(e.data).msg
-                const parsedNickname = JSON.parse(e.data).nickName
+                const isXML = e.data[0] === '<'
 
-                if(msg4!=='' && msg4!==undefined){			
+                if(!isXML){
+                    const msg4 = JSON.parse(e.data).msg
+                    const parsedNickname = JSON.parse(e.data).nickName
                     const msgHTMLElement = `
                                             <p style="font-weight:bold;">${parsedNickname}</p>
                                             <div style="margin-bottom:0.7rem; display:inline-block;">${msg4}</div>
@@ -110,7 +112,7 @@ export default function MessageInputContainer(){
                 const e = event || window.event
                 e.preventDefault()
                 deleteUserInDB(JSON.parse(userLocalStorage() as string))
-                ws.current?.send('{"command": "REFRESH_USERS"}')
+                ws.current?.send('<xml><command>REFRESH_USERS</command></xml>')
                 setToggleWsBoolean(false)
             }
 
@@ -118,7 +120,7 @@ export default function MessageInputContainer(){
 
             return ()=>{
                 deleteUserInDB(JSON.parse(userLocalStorage() as string))
-                ws.current?.send('{"command": "REFRESH_USERS"}')
+                ws.current?.send('<xml><command>REFRESH_USERS</command></xml>')
                 setToggleWsBoolean(false)
                 removeEventListener('beforeunload', (e) => beforeUnload(e))
             }
