@@ -1,5 +1,5 @@
 import { useState } from "react"
-import VisitorsContainerMobile from ".."
+import VisitorsContainerMobile from "../index.tsx"
 import ButtonToggleVisitorsContainerMobile from "./ButtonToggleVisitorsContainerMobile"
 
 export default function AsideVisitorsContainerMobile(){

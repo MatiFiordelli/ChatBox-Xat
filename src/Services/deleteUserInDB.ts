@@ -1,7 +1,8 @@
 import { User } from "../Types"
+import crudUrl from "./apiCrudForUsers"
 
 export default async function deleteUserInDB(user: User){
-    return fetch('http://localhost:3001/deleteUser',{
+    return fetch(`${crudUrl}deleteUser`,{
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json' 

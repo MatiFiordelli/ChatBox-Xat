@@ -1,7 +1,8 @@
 import { User, WsRef } from "../Types"
+import crudUrl from "./apiCrudForUsers"
 
 export default function renameUserInDB(user: User, ws: WsRef){
-    fetch('http://localhost:3001/renameUser',{
+    fetch(`${crudUrl}renameUser`,{
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json' 

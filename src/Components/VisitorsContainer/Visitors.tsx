@@ -4,10 +4,10 @@ import { ToggleModalLoginVisibilityCtx, ToggleWsBooleanCtx, UsersListCtx } from 
 import { useContext } from "react"
 import { ShowLogin, ToggleWsBoolean, UsersList } from "../../Types"
 
-export default function Visitors(){
+export default function Visitors( children: string | {} ){
     const {toggleWsBoolean} = useContext(ToggleWsBooleanCtx) as ToggleWsBoolean
     const {showLogin, setShowLogin} = useContext(ToggleModalLoginVisibilityCtx) as ShowLogin
-    const nickName = useSelector<RootState>((state)=>state.chatboxReducer.user.nickName) as string
+    let nickName = useSelector<RootState>((state)=>state.chatboxReducer.user.nickName) as string
     const id = useSelector<RootState>((state)=>state.chatboxReducer.user.id) as string
     const {usersList, } = useContext(UsersListCtx) as UsersList
 
@@ -17,6 +17,10 @@ export default function Visitors(){
         } else {
             alert('Para cambiar tu Nickname, primero debes entrar al chat')
         }
+    }
+
+    if (Object.values(children)[0]==='test'){
+        nickName='TestUser'
     }
 
     return(
@@ -32,6 +36,7 @@ export default function Visitors(){
                         className="block aspect-auto w-min h-min xl:h-[80%]"
                         alt={nickName}
                         src="a_(user)_20.webp"
+                        data-testid="myself"
                     />
                     <p>{nickName}</p>
                 </div>

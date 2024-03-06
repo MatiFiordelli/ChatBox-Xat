@@ -2,8 +2,6 @@ proyecto en React, con Typescript, usando XML, Tailwind CSS, Redux, Context API,
 
 npx tailwind -i  tailwind.css -o styles.css --minify
 
-hacer un sistema de users con name y id, en base a eso, cargar los contactos en la lista
-hacer un control del estado del websocket para que no me permita entrar si esta caido
 
 white-space
 word-wrap
