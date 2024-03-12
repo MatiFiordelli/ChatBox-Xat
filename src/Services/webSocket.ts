@@ -1,3 +1,3 @@
-const wsUrl = 'wss://sok.onrender.com'
+const wsUrl = 'wss://api-websocket-chatbox-xat.onrender.com'
 
 export default wsUrl
