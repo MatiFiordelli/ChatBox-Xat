@@ -59,6 +59,17 @@ export default function MessageInputContainer(){
     }
 
     useEffect(()=>{
+        console.log(ws.current?.readyState)
+        if(ws.current?.readyState === 0){
+            console.log('Conectando con el servidor')
+        } 
+        if(ws.current?.readyState === 1){
+            console.log('Conectado!!!')
+        } 
+        
+    },[ws.current?.readyState])
+
+    useEffect(()=>{
         toggleWsBoolean
             ? createWebsocket({ws, wsId})
             : deleteContact()
@@ -87,7 +98,7 @@ export default function MessageInputContainer(){
                     const parsedNickname = JSON.parse(e.data).nickName
                     const msgHTMLElement = `
                                             <p style="font-weight:bold;">${parsedNickname}</p>
-                                            <div style="margin-bottom:0.7rem; display:inline-block;">${msg4}</div>
+                                            <div style="margin-bottom:0.7rem; margin-left:0.2rem; display:inline-block;">${msg4}</div>
                                             `
 
                     if(msgContainerDivRef?.current){

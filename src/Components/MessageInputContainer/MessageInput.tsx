@@ -30,7 +30,7 @@ export default function MessageInput({ ws, beepSound }: PropsMessageInput ){
 	}
     
     return(
-        <div className="p-3 2xl:p-[2vw] bg-opacity-90 flex flex-auto bg-slate-100 text-slate-900 rounded-bl-lg 2xl:rounded-bl-2xl shadow-md overflow-auto break-all">
+        <div className="p-3 2xl:p-[2vw] bg-opacity-50 flex flex-auto bg-slate-100 text-slate-900 rounded-bl-lg 2xl:rounded-bl-2xl shadow-md overflow-auto break-all">
             <input 
                 autoFocus
                 aria-label="messageInput"
