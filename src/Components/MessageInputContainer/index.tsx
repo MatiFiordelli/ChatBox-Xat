@@ -13,8 +13,6 @@ import { refreshUserList } from "../../Services/refreshUserList"
 import { createWebsocket } from "../../Services/createWebsocket"
 import { useDispatch } from "react-redux"
 import { setDisplaySpinner, setMessageInput } from "../../Redux/actions"
-import { useSelector } from "react-redux"
-import { RootState } from "../../Redux/store"
 
 export default function MessageInputContainer(){
     const dispatch = useDispatch()
