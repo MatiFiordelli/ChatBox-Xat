@@ -12,7 +12,7 @@ export interface PropsButtonToggleVisitorsContainerMobile {
 
 export interface ReduxAction {
     type: string
-	payload: SmileyReducerState | string
+	payload: SmileyReducerState | string | boolean
 }
 
 export interface SmileyReducerState {

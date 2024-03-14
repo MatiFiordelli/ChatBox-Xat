@@ -1,10 +1,12 @@
 import  { combineReducers } from 'redux'
 import smileysReducer from './smileysReducer'
 import chatboxReducer from './chatboxReducer'
+import displaySpinnerReducer from './displaySpinnerReducer'
 
 const reducer = combineReducers({
     smileysReducer,
-    chatboxReducer
+    chatboxReducer,
+    displaySpinnerReducer
 })
 
 export default reducer

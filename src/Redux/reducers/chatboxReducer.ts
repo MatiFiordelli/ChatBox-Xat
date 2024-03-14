@@ -17,7 +17,7 @@ export default function chatboxReducer(state=initialState, action:ReduxAction) {
             const obj = JSON.parse(action.payload as string)
             return {...structuredClone(state), user:obj}
 
-         default:
+        default:
             return state
     }    
 }

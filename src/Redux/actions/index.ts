@@ -1,4 +1,4 @@
-import { ADDSMILEY, SETMESSAGEINPUT, SETUSERNAME } from "../types"
+import { ADDSMILEY, SETMESSAGEINPUT, SETUSERNAME, SETDISPLAYSPINNER } from "../types"
 import { SmileyObject } from "../../Types"
 
 export const addSmiley = (payload: SmileyObject) => ({
@@ -13,5 +13,10 @@ export const setMessageInput = (payload:string) => ({
 
 export const setUserName = (payload:string) => ({
     type: SETUSERNAME,
+    payload: payload
+})
+
+export const setDisplaySpinner = (payload:boolean) => ({
+    type: SETDISPLAYSPINNER,
     payload: payload
 })

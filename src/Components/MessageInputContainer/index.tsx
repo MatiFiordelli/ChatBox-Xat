@@ -12,7 +12,9 @@ import createUserInDB from "../../Services/createUserInDB"
 import { refreshUserList } from "../../Services/refreshUserList"
 import { createWebsocket } from "../../Services/createWebsocket"
 import { useDispatch } from "react-redux"
-import { setMessageInput } from "../../Redux/actions"
+import { setDisplaySpinner, setMessageInput } from "../../Redux/actions"
+import { useSelector } from "react-redux"
+import { RootState } from "../../Redux/store"
 
 export default function MessageInputContainer(){
     const dispatch = useDispatch()
@@ -59,12 +61,13 @@ export default function MessageInputContainer(){
     }
 
     useEffect(()=>{
-        console.log(ws.current?.readyState)
         if(ws.current?.readyState === 0){
-            console.log('Conectando con el servidor')
+            console.log('Conectando con el servidor..')
+            dispatch(setDisplaySpinner(true))
         } 
         if(ws.current?.readyState === 1){
-            console.log('Conectado!!!')
+            console.log('Conectado al Websocket!')
+            dispatch(setDisplaySpinner(false))
         } 
         
     },[ws.current?.readyState])
@@ -86,7 +89,7 @@ export default function MessageInputContainer(){
                 setToggleWsBoolean(false)
             }
             ws.current.onopen = async() => {
-                console.log('Conectado al Websocket', ws.current?.readyState)
+                //console.log('Conectado al Websocket', ws.current?.readyState)
                 insertContact()
                 refreshUserList(setUsersList)
             }
