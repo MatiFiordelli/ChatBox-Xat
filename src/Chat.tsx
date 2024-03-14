@@ -65,7 +65,7 @@ export default function ChatBox() {
 										<ModalLogin />
 									</section>
 
-									<section className={`bg-[url('../public/summer_medium.jpg')] lg:bg-[url('../public/summer_big.jpg')] bg-center bg-no-repeat bg-cover absolute text-gray-100 rounded-xl w-[90dvw] h-[93dvh] flex flex-row justify-center lg:gap-[0.5vw] m-auto p-2`}>
+									<section className={`bg-[url('../public/summer_medium.jpg')] lg:bg-[url('../public/summer_big.jpg')] bg-center bg-no-repeat bg-cover absolute text-gray-100 rounded-xl w-[90dvw] h-[93dvh] flex flex-row justify-center lg:gap-[0.5vw] m-auto p-2 overflow-hidden`}>
 										<div className="h-[98%] w-full sm:w-3/4 sm:h-[90dvh] flex flex-col justify-between text-slate-900 my-auto">
 											<MessagesListContainer />
 											<SmileysCarousel />

@@ -58,7 +58,7 @@ export default function MessageInputContainer(){
         }
     }
 
-    useEffect(()=>{
+    const detectReadyStateWS = () => {
         if(ws.current?.readyState === 0){
             console.log('Conectando con el servidor..')
             dispatch(setDisplaySpinner(true))
@@ -67,6 +67,10 @@ export default function MessageInputContainer(){
             console.log('Conectado al Websocket!')
             dispatch(setDisplaySpinner(false))
         } 
+    }
+
+    useEffect(()=>{
+        detectReadyStateWS()
         
     },[ws.current?.readyState])
 
@@ -74,6 +78,8 @@ export default function MessageInputContainer(){
         toggleWsBoolean
             ? createWebsocket({ws, wsId})
             : deleteContact()
+
+        detectReadyStateWS()
 
         if(ws.current){
             ws.current.onclose = () => {
